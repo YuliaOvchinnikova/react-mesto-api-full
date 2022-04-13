@@ -1,0 +1,17 @@
+.place__image {
+  width: 282px;
+  height: 282px;
+  object-fit: cover;
+  object-position: top;
+  border-radius: 10px 10px 0 0;
+}
+
+.place__image:hover {
+  cursor: pointer;
+}
+
+@media screen and (max-width: 1279px) {
+  .place__image {
+    max-width: 100%;
+  }
+}

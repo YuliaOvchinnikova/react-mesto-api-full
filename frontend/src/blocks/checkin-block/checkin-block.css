@@ -1,0 +1,8 @@
+.checkin-block {
+  max-width: calc(100% - 200px*2);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}

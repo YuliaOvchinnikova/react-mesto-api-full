@@ -1,0 +1,44 @@
+.place {
+  max-width: 282px;
+  min-height: 361px;
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  border-radius: 10px;
+  position: relative;
+}
+
+@media screen and (max-width: 1279px) {
+  .place {
+    max-width: 285px;
+    min-height: 350px;
+  }
+}
+
+@media screen and (max-width: 1180px) {
+  .place {
+    max-width: 275px;
+    min-height: 360px;
+  }
+}
+
+@media screen and (max-width: 1023px) {
+  .place {
+    max-width: 325px;
+    min-height: 365px;
+  }
+}
+
+@media screen and (max-width: 850px) {
+  .place {
+    max-width: 280px;
+    min-height: 355px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .place {
+    max-width: 100%;
+    min-height: 361px;
+  }
+}

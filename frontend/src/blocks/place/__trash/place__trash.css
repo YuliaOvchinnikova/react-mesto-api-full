@@ -1,0 +1,12 @@
+.place__trash {
+  width: 20px;
+  height: 20px;
+  background: url(../../..//images/trash.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  border: none;
+  transition: opacity 0.5s ease-in-out;
+}

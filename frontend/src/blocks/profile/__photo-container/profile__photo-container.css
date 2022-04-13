@@ -1,0 +1,23 @@
+.profile__photo-container {
+  position: relative;
+}
+
+.profile__photo-container:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: #000000;
+  background-image: url(../../../images/pen.svg);
+  background-size: 26px;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0;
+  transition: opacity 1s ease-in;
+}
+
+.profile__photo-container:hover:after {
+  opacity: 0.8;
+}

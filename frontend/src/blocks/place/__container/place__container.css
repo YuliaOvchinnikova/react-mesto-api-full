@@ -1,0 +1,7 @@
+.place__container {
+  display: flex;
+  justify-content: space-between;
+  box-sizing: border-box;
+  padding: 22px 15px 22px 21px;
+  align-items: center;
+}

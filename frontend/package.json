@@ -19,7 +19,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "npm run build && scp -r ./build/* yulia@51.250.21.57:/home/yulia/mesto-frontend"
   },
   "eslintConfig": {
     "extends": [

@@ -19,7 +19,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
-    "deploy": "npm run build && scp -r ./build/* yulia@51.250.21.57:/home/yulia/mesto-frontend"
+    "deploy": "npm run build && scp -r ./build/* yulia@51.250.21.57:/home/yulia/mesto-frontend",
+    "lint": "npx eslint ."
   },
   "eslintConfig": {
     "extends": [
@@ -40,6 +41,9 @@
     ]
   },
   "devDependencies": {
-    "gh-pages": "^3.2.3"
+    "gh-pages": "^3.2.3",
+    "eslint": "^8.11.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.25.4"
   }
 }

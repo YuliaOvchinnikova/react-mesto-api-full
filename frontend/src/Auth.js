@@ -8,11 +8,14 @@ function checkResponse(res) {
   }
 }
 
-function checkLoginResponse(res) {
+function checkEmptyResponse(res) {
   if (res.ok) {
-    return Promise.resolve({})
+    return Promise.resolve({});
   } else {
-    return Promise.reject(`Ошибка: ${res.status}`);
+    return Promise.reject({
+      status: res.status,
+      text: `Ошибка: ${res.status}`,
+    });
   }
 }
 
@@ -35,17 +38,13 @@ export const login = (email, password) => {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({ email, password }),
-    credentials: 'include'
-  }).then(checkLoginResponse);
+    credentials: 'include',
+  }).then(checkEmptyResponse);
 };
 
-export const checkToken = (token) => {
-  return fetch(`${BASE_URL}/users/me`, {
+export const signout = () => {
+  return fetch(`${BASE_URL}/signout`, {
     method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
-    },
-    credentials: 'include'
-  }).then(checkResponse);
+    credentials: 'include',
+  }).then(checkEmptyResponse);
 };

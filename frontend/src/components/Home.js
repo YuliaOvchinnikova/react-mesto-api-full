@@ -12,6 +12,7 @@ import EditProfilePopup from './EditProfilePopup';
 import EditAvatarPopup from './EditAvatarPopup';
 import AddPlacePopup from './AddPlacePopup';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
+import { signout } from '../Auth';
 
 function Home({ email }) {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
@@ -25,13 +26,14 @@ function Home({ email }) {
   const [cards, setCards] = useState([]);
 
   const history = useHistory();
+
   function handleCardLike(card) {
     const isLiked = card.likes.includes(currentUser._id);
 
     if (!isLiked) {
       api
         .likeCard(card._id)
-        .then(({data}) => {
+        .then(({ data }) => {
           const newCards = cards.map((c) => {
             if (c._id === card._id) {
               return data;
@@ -42,12 +44,16 @@ function Home({ email }) {
           setCards(newCards);
         })
         .catch((err) => {
-          console.log(err);
+          if (err.status === 401) {
+            history.push('/sign-in');
+          } else {
+            console.log(err.text);
+          }
         });
     } else {
       api
         .unlikeCard(card._id)
-        .then(({data}) => {
+        .then(({ data }) => {
           const newCards = cards.map((c) => {
             if (c._id === card._id) {
               return data;
@@ -58,7 +64,11 @@ function Home({ email }) {
           setCards(newCards);
         })
         .catch((err) => {
-          console.log(err);
+          if (err.status === 401) {
+            history.push('/sign-in');
+          } else {
+            console.log(err.text);
+          }
         });
     }
   }
@@ -71,53 +81,73 @@ function Home({ email }) {
         setCards(newCards);
       })
       .catch((err) => {
-        console.log(err);
+        if (err.status === 401) {
+          history.push('/sign-in');
+        } else {
+          console.log(err.text);
+        }
       });
   }
 
   useEffect(() => {
     api
       .getInitialCards()
-      .then(({data}) => {
+      .then(({ data }) => {
         setCards(data);
       })
       .catch((err) => {
-        console.log(err);
+        if (err.status === 401) {
+          history.push('/sign-in');
+        } else {
+          console.log(err.text);
+        }
       });
-  }, []);
+  }, [history]);
 
   useEffect(() => {
     api
       .getUserInfo()
-      .then(({data}) => {
+      .then(({ data }) => {
         setCurrentUser(data);
       })
       .catch((err) => {
-        console.log(err);
+        if (err.status === 401) {
+          history.push('/sign-in');
+        } else {
+          console.log(err.text);
+        }
       });
-  }, []);
+  }, [history]);
 
   function handleUpdateAvatar({ avatar }) {
     api
       .changeAvatar(avatar)
-      .then(({data}) => {
+      .then(({ data }) => {
         setCurrentUser(data);
         closeAllPopups();
       })
       .catch((err) => {
-        console.log(err);
+        if (err.status === 401) {
+          history.push('/sign-in');
+        } else {
+          console.log(err.text);
+        }
       });
   }
 
   function handleAddPlaceSubmit({ name, link }) {
     api
       .addNewCard(name, link)
-      .then(({data}) => {
+      .then(({ data }) => {
         setCards([data, ...cards]);
         closeAllPopups();
       })
       .catch((err) => {
-        console.log(err);
+        if (err.status === 401) {
+          history.push('/sign-in');
+        } else {
+          console.log(err.text);
+        }
       });
   }
 
@@ -148,20 +178,32 @@ function Home({ email }) {
   function handleUpdateUser({ name, about }) {
     api
       .changeUserInfo(name, about)
-      .then(({data}) => {
+      .then(({ data }) => {
         setCurrentUser(data);
         closeAllPopups();
       })
       .catch((err) => {
-        console.log(err);
+        if (err.status === 401) {
+          history.push('/sign-in');
+        } else {
+          console.log(err.text);
+        }
       });
   }
 
   function signOut() {
-    localStorage.removeItem('token');
-    localStorage.removeItem('email');
-
-    history.push('/sign-in');
+    signout()
+      .then(() => {
+        localStorage.removeItem('email');
+        history.push('/sign-in');
+      })
+      .catch((err) => {
+        if (err.status === 401) {
+          history.push('/sign-in');
+        } else {
+          console.log(err.text);
+        }
+      });
   }
 
   if (currentUser === undefined) {

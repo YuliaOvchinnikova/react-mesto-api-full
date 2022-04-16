@@ -8,7 +8,10 @@ class Api {
     if (res.ok) {
       return res.json();
     } else {
-      return Promise.reject(`Ошибка: ${res.status}`);
+      return Promise.reject({
+        status: res.status,
+        text: `Ошибка: ${res.status}`,
+      });
     }
   }
 
@@ -19,7 +22,7 @@ class Api {
         authorization: this._token,
         'Content-Type': 'application/json',
       },
-      credentials: 'include'
+      credentials: 'include',
     }).then(this._checkResponse);
   }
 
@@ -32,7 +35,7 @@ class Api {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ name: name, link: link }),
-      credentials: 'include'
+      credentials: 'include',
     }).then(this._checkResponse);
   }
 
@@ -44,7 +47,7 @@ class Api {
         authorization: this._token,
         'Content-Type': 'application/json',
       },
-      credentials: 'include'
+      credentials: 'include',
     }).then(this._checkResponse);
   }
 
@@ -55,7 +58,7 @@ class Api {
         authorization: this._token,
         'Content-Type': 'application/json',
       },
-      credentials: 'include'
+      credentials: 'include',
     }).then(this._checkResponse);
   }
 
@@ -67,7 +70,7 @@ class Api {
         authorization: this._token,
         'Content-Type': 'application/json',
       },
-      credentials: 'include'
+      credentials: 'include',
     }).then(this._checkResponse);
   }
 
@@ -79,7 +82,7 @@ class Api {
         authorization: this._token,
         'Content-Type': 'application/json',
       },
-      credentials: 'include'
+      credentials: 'include',
     }).then(this._checkResponse);
   }
 
@@ -95,7 +98,7 @@ class Api {
         name: name,
         about: about,
       }),
-      credentials: 'include'
+      credentials: 'include',
     }).then(this._checkResponse);
   }
 
@@ -111,7 +114,7 @@ class Api {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(body),
-      credentials: 'include'
+      credentials: 'include',
     }).then(this._checkResponse);
   }
 }

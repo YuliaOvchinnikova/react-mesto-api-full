@@ -11,28 +11,28 @@ import { checkToken, login, register } from '../Auth';
 
 export default function App() {
   const history = useHistory();
-  const token = localStorage.getItem('token');
+  // const token = localStorage.getItem('token');
 
   const [failedLogin, setFailedLogin] = useState(false);
 
   const [successRegistration, setSuccessRegistration] = useState(false);
   const [failedRegistration, setFailedRegistration] = useState(false);
 
-  useEffect(() => {
-    if (token === undefined || token === null) {
-      return;
-    }
-    checkToken(token)
-      .then((res) => {
-        if (res && res.data.email !== '') {
-          localStorage.setItem('email', res.data.email);
-          history.push('/');
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [token, history]);
+  // useEffect(() => {
+  //   if (token === undefined || token === null) {
+  //     return;
+  //   }
+  //   checkToken(token)
+  //     .then((res) => {
+  //       if (res && res.data.email !== '') {
+  //         localStorage.setItem('email', res.data.email);
+  //         history.push('/');
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // }, [token, history]);
 
   function loginSubmit(email, password) {
     if (!email || !password) {
@@ -42,7 +42,7 @@ export default function App() {
 
     login(email, password)
       .then((res) => {
-        localStorage.setItem('token', res.token);
+        // localStorage.setItem('token', res.token);
         localStorage.setItem('email', email);
 
         history.push('/');
@@ -81,7 +81,8 @@ export default function App() {
   return (
     <>
       <Switch>
-        <ProtectedRoute exact path="/" component={Home} />
+        {/* <ProtectedRoute exact path="/" component={Home} /> */}
+        <Route exact path="/" component={Home} />
 
         <Route path="/sign-up">
           <Register
@@ -99,9 +100,9 @@ export default function App() {
             failedLogin={failedLogin}
           />
         </Route>
-        <Route>
+        {/* <Route>
           {token !== null ? <Redirect to="/" /> : <Redirect to="/sign-in" />}
-        </Route>
+        </Route> */}
       </Switch>
     </>
   );

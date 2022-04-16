@@ -19,6 +19,7 @@ class Api {
         authorization: this._token,
         'Content-Type': 'application/json',
       },
+      credentials: 'include'
     }).then(this._checkResponse);
   }
 
@@ -31,6 +32,7 @@ class Api {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ name: name, link: link }),
+      credentials: 'include'
     }).then(this._checkResponse);
   }
 
@@ -42,6 +44,7 @@ class Api {
         authorization: this._token,
         'Content-Type': 'application/json',
       },
+      credentials: 'include'
     }).then(this._checkResponse);
   }
 
@@ -52,6 +55,7 @@ class Api {
         authorization: this._token,
         'Content-Type': 'application/json',
       },
+      credentials: 'include'
     }).then(this._checkResponse);
   }
 
@@ -63,6 +67,7 @@ class Api {
         authorization: this._token,
         'Content-Type': 'application/json',
       },
+      credentials: 'include'
     }).then(this._checkResponse);
   }
 
@@ -74,6 +79,7 @@ class Api {
         authorization: this._token,
         'Content-Type': 'application/json',
       },
+      credentials: 'include'
     }).then(this._checkResponse);
   }
 
@@ -89,6 +95,7 @@ class Api {
         name: name,
         about: about,
       }),
+      credentials: 'include'
     }).then(this._checkResponse);
   }
 
@@ -104,13 +111,13 @@ class Api {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(body),
+      credentials: 'include'
     }).then(this._checkResponse);
   }
 }
 
 const config = {
-  address: 'https://mesto.nomoreparties.co/v1/cohort-32',
-  // address: 'https://auth.nomoreparties.co',
+  address: 'https://api.mestogram.students.nomoredomains.work',
   token: '6ab3ffcb-8b7e-4953-95c8-2915e9d79fac',
 };
 

@@ -26,15 +26,15 @@ function Home({ email }) {
 
   const history = useHistory();
   function handleCardLike(card) {
-    const isLiked = card.likes.some((i) => i._id === currentUser._id);
+    const isLiked = card.likes.includes(currentUser._id);
 
     if (!isLiked) {
       api
         .likeCard(card._id)
-        .then((newCard) => {
+        .then(({data}) => {
           const newCards = cards.map((c) => {
             if (c._id === card._id) {
-              return newCard;
+              return data;
             } else {
               return c;
             }
@@ -47,10 +47,10 @@ function Home({ email }) {
     } else {
       api
         .unlikeCard(card._id)
-        .then((newCard) => {
+        .then(({data}) => {
           const newCards = cards.map((c) => {
             if (c._id === card._id) {
-              return newCard;
+              return data;
             } else {
               return c;
             }
@@ -78,8 +78,8 @@ function Home({ email }) {
   useEffect(() => {
     api
       .getInitialCards()
-      .then((cards) => {
-        setCards(cards);
+      .then(({data}) => {
+        setCards(data);
       })
       .catch((err) => {
         console.log(err);
@@ -89,8 +89,8 @@ function Home({ email }) {
   useEffect(() => {
     api
       .getUserInfo()
-      .then((res) => {
-        setCurrentUser(res);
+      .then(({data}) => {
+        setCurrentUser(data);
       })
       .catch((err) => {
         console.log(err);
@@ -100,8 +100,8 @@ function Home({ email }) {
   function handleUpdateAvatar({ avatar }) {
     api
       .changeAvatar(avatar)
-      .then((res) => {
-        setCurrentUser(res);
+      .then(({data}) => {
+        setCurrentUser(data);
         closeAllPopups();
       })
       .catch((err) => {
@@ -112,8 +112,8 @@ function Home({ email }) {
   function handleAddPlaceSubmit({ name, link }) {
     api
       .addNewCard(name, link)
-      .then((newCard) => {
-        setCards([newCard, ...cards]);
+      .then(({data}) => {
+        setCards([data, ...cards]);
         closeAllPopups();
       })
       .catch((err) => {
@@ -148,8 +148,8 @@ function Home({ email }) {
   function handleUpdateUser({ name, about }) {
     api
       .changeUserInfo(name, about)
-      .then((userInfo) => {
-        setCurrentUser(userInfo);
+      .then(({data}) => {
+        setCurrentUser(data);
         closeAllPopups();
       })
       .catch((err) => {

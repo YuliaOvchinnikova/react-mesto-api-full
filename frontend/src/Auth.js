@@ -1,8 +1,16 @@
-export const BASE_URL = 'https://auth.nomoreparties.co';
+export const BASE_URL = 'https://api.mestogram.students.nomoredomains.work';
 
 function checkResponse(res) {
   if (res.ok) {
     return res.json();
+  } else {
+    return Promise.reject(`Ошибка: ${res.status}`);
+  }
+}
+
+function checkLoginResponse(res) {
+  if (res.ok) {
+    return Promise.resolve({})
   } else {
     return Promise.reject(`Ошибка: ${res.status}`);
   }
@@ -27,7 +35,8 @@ export const login = (email, password) => {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({ email, password }),
-  }).then(checkResponse);
+    credentials: 'include'
+  }).then(checkLoginResponse);
 };
 
 export const checkToken = (token) => {
@@ -37,5 +46,6 @@ export const checkToken = (token) => {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
     },
+    credentials: 'include'
   }).then(checkResponse);
 };

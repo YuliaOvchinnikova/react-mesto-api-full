@@ -19,7 +19,7 @@ const { login, createUser } = require("./controllers/users");
 const auth = require("./middlewares/auth");
 
 const allowedCors = [
-  'http://mestogram.students.nomoredomains.work',
+  'https://mestogram.students.nomoredomains.work',
 ];
 
 app.use(bodyParser.json());
@@ -31,6 +31,7 @@ app.use(function(req, res, next) {
   const { origin } = req.headers; // Сохраняем источник запроса в переменную origin
   if (allowedCors.includes(origin)) {
     res.header('Access-Control-Allow-Origin', origin);
+    res.header('Access-Control-Allow-Credentials', 'true');
 }
 
   const { method } = req; 

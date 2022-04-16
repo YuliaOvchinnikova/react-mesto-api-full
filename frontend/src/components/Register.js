@@ -49,7 +49,7 @@ export default function Register({
             className="form__input"
             name="email"
             type="email"
-            placeholder="Email"
+            placeholder="Почта"
             value={email}
             onChange={handleChangeEmail}
           ></input>
@@ -57,7 +57,7 @@ export default function Register({
             className="form__input"
             name="c"
             type="text"
-            placeholder="Password"
+            placeholder="Пароль"
             value={password}
             onChange={handleChangePassword}
           ></input>
@@ -65,9 +65,13 @@ export default function Register({
             Зарегистрироваться
           </button>
         </form>
-        <Link to="/sign-in">
-          <p className="checkin-block__link">Уже зарегистрированы? Войти</p>
-        </Link>
+
+        <p className="checkin-block__link">
+          Уже зарегистрированы?&nbsp;
+          <Link to="/sign-in" className="checkin-block__link">
+            Войти
+          </Link>
+        </p>
       </div>
     </div>
   );

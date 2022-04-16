@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Header from './Header';
 
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import InfoTooltip from './InfoTooltip';
 
@@ -39,7 +39,7 @@ export default function Login({ loginSubmit, failedLogin, loginOnClose }) {
             className="form__input"
             name="email"
             type="email"
-            placeholder="Email"
+            placeholder="Почта"
             value={email}
             onChange={handleChangeEmail}
           ></input>
@@ -47,7 +47,7 @@ export default function Login({ loginSubmit, failedLogin, loginOnClose }) {
             className="form__input"
             name="c"
             type="text"
-            placeholder="Password"
+            placeholder="Пароль"
             value={password}
             onChange={handleChangePassword}
           ></input>

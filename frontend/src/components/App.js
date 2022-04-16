@@ -82,6 +82,8 @@ export default function App() {
   }
 
   function registrationOnCloseSuccess() {
+    setFailedRegistration(false);
+    setSuccessRegistration(false);
     history.push('/signup');
   }
 

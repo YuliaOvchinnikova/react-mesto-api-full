@@ -94,11 +94,11 @@ app.get('/signout', function (req, res) {
 app.use('/users', require('./routes/users'));
 app.use('/cards', require('./routes/cards'));
 
-app.use(errorLogger);
-
 app.use(() => {
   throw new ErrorNotFound('Страница не найдена!');
 });
+
+app.use(errorLogger);
 
 app.use(errors());
 

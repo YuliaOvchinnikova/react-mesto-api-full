@@ -1,32 +1,62 @@
 import React from 'react';
-import { useState, useEffect } from 'react';
+import {
+  useState,
+  useEffect,
+} from 'react';
 
-import { Route, Switch, Redirect, useHistory } from 'react-router-dom';
+import {
+  Route,
+  Switch,
+  Redirect,
+  useHistory,
+} from 'react-router-dom';
 import Register from './Register';
 import Login from './Login';
 import ProtectedRoute from './ProtectedRoute';
 import api from '../utils/Api.js';
 
 import Home from './Home';
-import { login, register } from '../Auth';
+import {
+  login,
+  register,
+} from '../Auth';
 
 export default function App() {
   const history = useHistory();
 
-  const [failedLogin, setFailedLogin] = useState(false);
+  const [failedLogin, setFailedLogin] =
+    useState(false);
 
-  const [successRegistration, setSuccessRegistration] = useState(false);
-  const [failedRegistration, setFailedRegistration] = useState(false);
+  const [
+    successRegistration,
+    setSuccessRegistration,
+  ] = useState(false);
+  const [
+    failedRegistration,
+    setFailedRegistration,
+  ] = useState(false);
 
-  const [userAuthorized, setUserAuthorized] = useState(false);
-  const [userInfoLoading, setUserInfoLoading] = useState(true);
+  const [
+    userAuthorized,
+    setUserAuthorized,
+  ] = useState(false);
+  const [
+    userInfoLoading,
+    setUserInfoLoading,
+  ] = useState(true);
 
   useEffect(() => {
     api
       .getUserInfo()
       .then((res) => {
-        if (res && res.data.email !== '') {
-          localStorage.setItem('email', res.data.email);
+        if (
+          res &&
+          res.data.email !== ''
+        ) {
+          localStorage.setItem(
+            'email',
+            res.data.email
+          );
           setUserInfoLoading(false);
           setUserAuthorized(true);
           history.push('/');
@@ -40,9 +70,16 @@ export default function App() {
           console.log(err.text);
         }
       });
-  }, [userInfoLoading, userAuthorized, history]);
+  }, [
+    userInfoLoading,
+    userAuthorized,
+    history,
+  ]);
 
-  function loginSubmit(email, password) {
+  function loginSubmit(
+    email,
+    password
+  ) {
     if (!email || !password) {
       setFailedLogin(true);
       return;
@@ -50,7 +87,10 @@ export default function App() {
 
     login(email, password)
       .then((res) => {
-        localStorage.setItem('email', email);
+        localStorage.setItem(
+          'email',
+          email
+        );
         setUserAuthorized(true);
         history.push('/');
       })
@@ -65,8 +105,18 @@ export default function App() {
     history.push('/sign-in');
   }
 
-  function registrationSubmit(email, password) {
-    register(email, password)
+  function registrationSubmit(
+    email,
+    name,
+    about,
+    password
+  ) {
+    register(
+      email,
+      name,
+      about,
+      password
+    )
       .then(() => {
         setSuccessRegistration(true);
       })
@@ -103,11 +153,21 @@ export default function App() {
 
         <Route path="/sign-up">
           <Register
-            registrationSubmit={registrationSubmit}
-            registratinOnCloseFail={registratinOnCloseFail}
-            registrationOnCloseSuccess={registrationOnCloseSuccess}
-            successRegistration={successRegistration}
-            failedRegistration={failedRegistration}
+            registrationSubmit={
+              registrationSubmit
+            }
+            registratinOnCloseFail={
+              registratinOnCloseFail
+            }
+            registrationOnCloseSuccess={
+              registrationOnCloseSuccess
+            }
+            successRegistration={
+              successRegistration
+            }
+            failedRegistration={
+              failedRegistration
+            }
           />
         </Route>
         <Route path="/sign-in">
@@ -118,7 +178,11 @@ export default function App() {
           />
         </Route>
         <Route>
-          {userAuthorized ? <Redirect to="/" /> : <Redirect to="/sign-in" />}
+          {userAuthorized ? (
+            <Redirect to="/" />
+          ) : (
+            <Redirect to="/sign-in" />
+          )}
         </Route>
       </Switch>
     </>

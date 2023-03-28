@@ -1,5 +1,5 @@
 class ForbiddenError extends Error {
-  constructor(message = "Необходима авторизация.") {
+  constructor(message = "Authorization required.") {
     super(message);
     this.statusCode = 403;
   }

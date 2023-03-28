@@ -6,7 +6,7 @@ const ErrorUnauthorized = require("../errors/ErrorUnauthorized");
 
 module.exports = (req, res, next) => {
   if (!req.cookies.jwt) {
-    next(new ErrorUnauthorized("Пользователь не зарегистрирован."));
+    next(new ErrorUnauthorized("User hasn't been registered."));
     return;
   }
 
@@ -14,18 +14,18 @@ module.exports = (req, res, next) => {
   let payload;
 
   try {
-    // попытаемся верифицировать токен
+    // we try to verify the token
     payload = jwt.verify(
       token,
-      NODE_ENV === "production" ? JWT_SECRET : "dev-secret",
+      NODE_ENV === "production" ? JWT_SECRET : "dev-secret"
     );
   } catch (err) {
-    // отправим ошибку, если не получилось
-    next(new ErrorUnauthorized("Пользователь не зарегистрирован."));
+    // throw an error if something went wrong
+    next(new ErrorUnauthorized("User hasn't been registered."));
     return;
   }
 
-  req.user = payload; // записываем пейлоуд в объект запроса
+  req.user = payload; // add payload in the request object
 
   next();
 };

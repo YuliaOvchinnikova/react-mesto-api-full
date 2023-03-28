@@ -5,7 +5,7 @@ const errorHandler = (err, req, res, next) => {
   console.log(err);
 
   res.status(status).send({
-    message: status === 500 ? "Произошла внутренняя ошибка" : err.message,
+    message: status === 500 ? "Internal error occurred." : err.message,
   });
 };
 

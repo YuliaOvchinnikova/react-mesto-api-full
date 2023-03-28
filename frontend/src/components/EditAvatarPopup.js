@@ -1,8 +1,15 @@
-import { useState, useEffect } from 'react';
+import {
+  useState,
+  useEffect,
+} from 'react';
 
 import PopupWithForm from './PopupWithForm';
 
-function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
+function EditAvatarPopup({
+  isOpen,
+  onClose,
+  onUpdateAvatar,
+}) {
   const [url, setUrl] = useState('');
 
   function handleSubmit(e) {
@@ -23,9 +30,9 @@ function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
 
   return (
     <PopupWithForm
-      title="Обновить аватар"
+      title="Change new profile photo"
       name="change"
-      buttonText="Сохранить"
+      buttonText="Save"
       isOpen={isOpen}
       onClose={onClose}
       onSubmit={handleSubmit}
@@ -35,7 +42,7 @@ function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
         type="url"
         id="avatar-input"
         name="avatar"
-        placeholder="Ссылка на аватарку"
+        placeholder="Link of profile photo"
         required
         value={url}
         onChange={handleChange}

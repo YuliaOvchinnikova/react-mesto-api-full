@@ -1,8 +1,9 @@
-function Footer(props) {
+function Footer() {
   return (
     <footer className="footer">
       <p className="footer__copyright">
-        `© {new Date().getFullYear()} Mesto Russia`
+        `© {new Date().getFullYear()}
+        Happy place`
       </p>
     </footer>
   );

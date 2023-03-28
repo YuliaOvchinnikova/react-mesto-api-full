@@ -17,7 +17,7 @@ module.exports.createCard = (req, res, next) => {
     .then((card) => res.send({ data: card }))
     .catch((err) => {
       if (err.name === "ValidationError") {
-        next(new ErrorValidation("Данные для создания карточки не корректны."));
+        next(new ErrorValidation("Data for creating card is not valid."));
       } else {
         next(err);
       }
@@ -25,60 +25,71 @@ module.exports.createCard = (req, res, next) => {
 };
 
 module.exports.deleteCardById = (req, res, next) => {
-  Card.findById(req.params.cardId).orFail(() => {
-    throw new ErrorNotFound(`Карточка с id ${req.params.cardId} для пользователя ${req.user._id} не найдена.`);
-  })
+  Card.findById(req.params.cardId)
+    .orFail(() => {
+      throw new ErrorNotFound(
+        `Card with id ${req.params.cardId} for user ${req.user._id} is not found.`
+      );
+    })
     .then((card) => {
       if (req.user._id !== card.owner.toString()) {
-        throw new ErrorForbidden("Вы не можете удалить чужую карточку");
+        throw new ErrorForbidden("You can delete just your cards.");
       }
-      Card.deleteOne({ _id: req.params.cardId }).then(() => res.send({ data: card }));
+      Card.deleteOne({ _id: req.params.cardId }).then(() =>
+        res.send({ data: card })
+      );
     })
     .catch((err) => {
       if (err.name === "CastError") {
-        next(new ErrorValidation(`Некорректный id ${req.params.cardId}`));
+        next(new ErrorValidation(`Invalid id ${req.params.cardId}`));
       } else if (err.name === "ValidationError") {
-        next(new ErrorValidation("Неправильные данные"));
+        next(new ErrorValidation("Invalid data."));
       } else {
         next(err);
       }
     });
 };
 
-module.exports.likeCard = (req, res, next) => Card.findByIdAndUpdate(
-  req.params.cardId,
-  { $addToSet: { likes: req.user._id } },
-  { new: true },
-)
-  .orFail(() => {
-    throw new ErrorNotFound(`Карточка с id ${req.params.cardId} не найдена.`);
-  })
-  .then((card) => res.send({ data: card }))
-  .catch((err) => {
-    if (err.name === "CastError") {
-      next(new ErrorValidation(`Некорректный id ${req.params.cardId}`));
-    } else if (err.name === "ValidationError") {
-      next(new ErrorValidation("Неправильные данные"));
-    } else {
-      next(err);
-    }
-  });
+module.exports.likeCard = (req, res, next) =>
+  Card.findByIdAndUpdate(
+    req.params.cardId,
+    { $addToSet: { likes: req.user._id } },
+    { new: true }
+  )
+    .orFail(() => {
+      throw new ErrorNotFound(
+        `Card with id ${req.params.cardId} is not found.`
+      );
+    })
+    .then((card) => res.send({ data: card }))
+    .catch((err) => {
+      if (err.name === "CastError") {
+        next(new ErrorValidation(`Invalid id ${req.params.cardId}`));
+      } else if (err.name === "ValidationError") {
+        next(new ErrorValidation("Invalid data"));
+      } else {
+        next(err);
+      }
+    });
 
-module.exports.dislikeCard = (req, res, next) => Card.findByIdAndUpdate(
-  req.params.cardId,
-  { $pull: { likes: req.user._id } },
-  { new: true },
-)
-  .orFail(() => {
-    throw new ErrorNotFound(`Карточка с id ${req.params.cardId} не найдена.`);
-  })
-  .then((card) => res.send({ data: card }))
-  .catch((err) => {
-    if (err.name === "CastError") {
-      next(new ErrorValidation(`Некорректный id ${req.params.cardId}`));
-    } else if (err.name === "ValidationError") {
-      next(new ErrorValidation("Неправильные данные"));
-    } else {
-      next(err);
-    }
-  });
+module.exports.dislikeCard = (req, res, next) =>
+  Card.findByIdAndUpdate(
+    req.params.cardId,
+    { $pull: { likes: req.user._id } },
+    { new: true }
+  )
+    .orFail(() => {
+      throw new ErrorNotFound(
+        `Card with id ${req.params.cardId} is not found.`
+      );
+    })
+    .then((card) => res.send({ data: card }))
+    .catch((err) => {
+      if (err.name === "CastError") {
+        next(new ErrorValidation(`Invalid id ${req.params.cardId}`));
+      } else if (err.name === "ValidationError") {
+        next(new ErrorValidation("Invalid data"));
+      } else {
+        next(err);
+      }
+    });

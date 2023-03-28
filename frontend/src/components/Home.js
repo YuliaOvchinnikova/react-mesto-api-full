@@ -1,4 +1,7 @@
-import { useState, useEffect } from 'react';
+import {
+  useState,
+  useEffect,
+} from 'react';
 import { useHistory } from 'react-router-dom';
 
 import Header from './Header';
@@ -15,32 +18,54 @@ import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import { signout } from '../Auth';
 
 function Home({ email }) {
-  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
-  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
-  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
-  const [isDeleteCardPopupOpen, setIsDeleteCardPopupOpen] = useState(false);
-  const [selectedCard, setSelectedCard] = useState(null);
+  const [
+    isEditProfilePopupOpen,
+    setIsEditProfilePopupOpen,
+  ] = useState(false);
+  const [
+    isAddPlacePopupOpen,
+    setIsAddPlacePopupOpen,
+  ] = useState(false);
+  const [
+    isEditAvatarPopupOpen,
+    setIsEditAvatarPopupOpen,
+  ] = useState(false);
+  const [
+    isDeleteCardPopupOpen,
+    setIsDeleteCardPopupOpen,
+  ] = useState(false);
+  const [
+    selectedCard,
+    setSelectedCard,
+  ] = useState(null);
 
-  const [currentUser, setCurrentUser] = useState(undefined);
+  const [currentUser, setCurrentUser] =
+    useState(undefined);
 
-  const [cards, setCards] = useState([]);
+  const [cards, setCards] = useState(
+    []
+  );
 
   const history = useHistory();
 
   function handleCardLike(card) {
-    const isLiked = card.likes.includes(currentUser._id);
+    const isLiked = card.likes.includes(
+      currentUser._id
+    );
 
     if (!isLiked) {
       api
         .likeCard(card._id)
         .then(({ data }) => {
-          const newCards = cards.map((c) => {
-            if (c._id === card._id) {
-              return data;
-            } else {
-              return c;
+          const newCards = cards.map(
+            (c) => {
+              if (c._id === card._id) {
+                return data;
+              } else {
+                return c;
+              }
             }
-          });
+          );
           setCards(newCards);
         })
         .catch((err) => {
@@ -54,13 +79,15 @@ function Home({ email }) {
       api
         .unlikeCard(card._id)
         .then(({ data }) => {
-          const newCards = cards.map((c) => {
-            if (c._id === card._id) {
-              return data;
-            } else {
-              return c;
+          const newCards = cards.map(
+            (c) => {
+              if (c._id === card._id) {
+                return data;
+              } else {
+                return c;
+              }
             }
-          });
+          );
           setCards(newCards);
         })
         .catch((err) => {
@@ -77,7 +104,9 @@ function Home({ email }) {
     api
       .deleteCard(card._id)
       .then(() => {
-        const newCards = cards.filter((c) => c._id !== card._id);
+        const newCards = cards.filter(
+          (c) => c._id !== card._id
+        );
         setCards(newCards);
       })
       .catch((err) => {
@@ -119,7 +148,9 @@ function Home({ email }) {
       });
   }, [history]);
 
-  function handleUpdateAvatar({ avatar }) {
+  function handleUpdateAvatar({
+    avatar,
+  }) {
     api
       .changeAvatar(avatar)
       .then(({ data }) => {
@@ -135,7 +166,10 @@ function Home({ email }) {
       });
   }
 
-  function handleAddPlaceSubmit({ name, link }) {
+  function handleAddPlaceSubmit({
+    name,
+    link,
+  }) {
     api
       .addNewCard(name, link)
       .then(({ data }) => {
@@ -175,7 +209,10 @@ function Home({ email }) {
     setSelectedCard(card);
   }
 
-  function handleUpdateUser({ name, about }) {
+  function handleUpdateUser({
+    name,
+    about,
+  }) {
     api
       .changeUserInfo(name, about)
       .then(({ data }) => {
@@ -194,7 +231,9 @@ function Home({ email }) {
   function signOut() {
     signout()
       .then(() => {
-        localStorage.removeItem('email');
+        localStorage.removeItem(
+          'email'
+        );
         history.push('/sign-in');
       })
       .catch((err) => {
@@ -210,56 +249,86 @@ function Home({ email }) {
     return <div></div>;
   }
   return (
-    <CurrentUserContext.Provider value={currentUser}>
+    <CurrentUserContext.Provider
+      value={currentUser}
+    >
       <div className="page">
         <Header>
           <div className="header__container">
-            <p className="header__email">{email}</p>
+            <p className="header__email">
+              {email}
+            </p>
 
-            <button onClick={signOut} className="header__link">
-              Выйти
+            <button
+              onClick={signOut}
+              className="header__link"
+            >
+              Log out
             </button>
           </div>
         </Header>
 
         <Main
-          onEditProfile={handleEditProfileClick}
-          onAddPlace={handleAddPlaceClick}
-          onEditAvatar={handleEditAvatarClick}
+          onEditProfile={
+            handleEditProfileClick
+          }
+          onAddPlace={
+            handleAddPlaceClick
+          }
+          onEditAvatar={
+            handleEditAvatarClick
+          }
           onCardClick={handleCardClick}
-          onDeleteCard={handleDeleteCardClick}
+          onDeleteCard={
+            handleDeleteCardClick
+          }
           cards={cards}
           onCardLike={handleCardLike}
-          onCardDelete={handleCardDelete}
+          onCardDelete={
+            handleCardDelete
+          }
         />
         <Footer />
         <EditProfilePopup
-          isOpen={isEditProfilePopupOpen}
+          isOpen={
+            isEditProfilePopupOpen
+          }
           onClose={closeAllPopups}
-          onUpdateUser={handleUpdateUser}
+          onUpdateUser={
+            handleUpdateUser
+          }
         />
 
         <AddPlacePopup
           isOpen={isAddPlacePopupOpen}
           onClose={closeAllPopups}
-          onAddPlace={handleAddPlaceSubmit}
+          onAddPlace={
+            handleAddPlaceSubmit
+          }
         />
 
         <EditAvatarPopup
           isOpen={isEditAvatarPopupOpen}
           onClose={closeAllPopups}
-          onUpdateAvatar={handleUpdateAvatar}
+          onUpdateAvatar={
+            handleUpdateAvatar
+          }
         />
 
         <PopupWithForm
-          title="Вы уверены?"
+          title="Are you sure?"
           name="delete"
-          buttonText="Да"
+          buttonText="Yes"
           isOpen={isDeleteCardPopupOpen}
           onClose={closeAllPopups}
         ></PopupWithForm>
 
-        <ImagePopup card={selectedCard} onClose={closeAllPopups} />
+        {selectedCard && (
+          <ImagePopup
+            card={selectedCard}
+            onClose={closeAllPopups}
+          />
+        )}
       </div>
     </CurrentUserContext.Provider>
   );

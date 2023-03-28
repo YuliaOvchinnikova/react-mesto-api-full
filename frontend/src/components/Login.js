@@ -5,9 +5,15 @@ import { Link } from 'react-router-dom';
 
 import InfoTooltip from './InfoTooltip';
 
-export default function Login({ loginSubmit, failedLogin, loginOnClose }) {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+export default function Login({
+  loginSubmit,
+  failedLogin,
+  loginOnClose,
+}) {
+  const [email, setEmail] =
+    useState('');
+  const [password, setPassword] =
+    useState('');
 
   function handleChangeEmail(e) {
     setEmail(e.target.value);
@@ -25,21 +31,34 @@ export default function Login({ loginSubmit, failedLogin, loginOnClose }) {
 
   return (
     <div className="page">
-      {failedLogin && <InfoTooltip isSuccess={false} onClose={loginOnClose} />}
+      {failedLogin && (
+        <InfoTooltip
+          isSuccess={false}
+          onClose={loginOnClose}
+        />
+      )}
 
       <Header>
-        <Link className="header__link" to="/sign-up">
-          Регистрация
+        <Link
+          className="header__link"
+          to="/sign-up"
+        >
+          Sign up
         </Link>
       </Header>
       <div className="checkin-block">
-        <h1 className="checkin-block__title">Вход</h1>
-        <form onSubmit={handleSubmit} className="form">
+        <h1 className="checkin-block__title">
+          Log in
+        </h1>
+        <form
+          onSubmit={handleSubmit}
+          className="form"
+        >
           <input
             className="form__input"
             name="email"
             type="email"
-            placeholder="Почта"
+            placeholder="Email"
             value={email}
             onChange={handleChangeEmail}
           ></input>
@@ -47,12 +66,17 @@ export default function Login({ loginSubmit, failedLogin, loginOnClose }) {
             className="form__input"
             name="c"
             type="text"
-            placeholder="Пароль"
+            placeholder="Password"
             value={password}
-            onChange={handleChangePassword}
+            onChange={
+              handleChangePassword
+            }
           ></input>
-          <button className="form__button interactive-button" type="submit">
-            Войти
+          <button
+            className="form__button interactive-button"
+            type="submit"
+          >
+            Log in
           </button>
         </form>
       </div>

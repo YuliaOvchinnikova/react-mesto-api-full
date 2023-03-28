@@ -16,24 +16,24 @@ module.exports.getUsers = (req, res, next) => {
 };
 
 module.exports.createUser = (req, res, next) => {
-  const {
-    name, about, avatar, email, password,
-  } = req.body;
+  const { name, about, avatar, email, password } = req.body;
 
   User.findOne({ email })
     .then((user) => {
       if (user) {
-        throw new ErrorConflict("Пользователь с таким email уже зарегистрирован.");
+        throw new ErrorConflict("The email is already registered.");
       }
       return bcrypt.hash(password, SALT_ROUNDS);
     })
-    .then((hash) => User.create({
-      name,
-      about,
-      avatar,
-      email,
-      password: hash,
-    }))
+    .then((hash) =>
+      User.create({
+        name,
+        about,
+        avatar,
+        email,
+        password: hash,
+      })
+    )
     .then((user) => {
       res.send({
         data: {
@@ -56,14 +56,14 @@ module.exports.createUser = (req, res, next) => {
 module.exports.getUserById = (req, res, next) => {
   User.findById(req.params.id)
     .orFail(() => {
-      throw new ErrorNotFound(`Пользователь с id ${req.params.id} не найден.`);
+      throw new ErrorNotFound(`User with id ${req.params.id} is not found.`);
     })
     .then((user) => res.send({ data: user }))
     .catch((err) => {
       if (err.name === "CastError") {
-        next(new ErrorValidation(`Некорректный id ${req.params.id}`));
+        next(new ErrorValidation(`Invalid id ${req.params.id}`));
       } else if (err.name === "ValidationError") {
-        next(new ErrorValidation("Неправильные данные"));
+        next(new ErrorValidation("Invalid data"));
       } else {
         next(err);
       }
@@ -73,14 +73,14 @@ module.exports.getUserById = (req, res, next) => {
 module.exports.getMe = (req, res, next) => {
   User.findById(req.user._id)
     .orFail(() => {
-      throw new ErrorNotFound(`Пользователь с id ${req.user._id} не найден.`);
+      throw new ErrorNotFound(`User with id ${req.user._id} is not found.`);
     })
     .then((user) => res.send({ data: user }))
     .catch((err) => {
       if (err.name === "CastError") {
-        next(new ErrorValidation(`Некорректный id ${req.params.id}`));
+        next(new ErrorValidation(`Invalid id ${req.params.id}`));
       } else if (err.name === "ValidationError") {
-        next(new ErrorValidation("Неправильные данные"));
+        next(new ErrorValidation("Invalid data"));
       } else {
         next(err);
       }
@@ -93,17 +93,17 @@ module.exports.updateUser = (req, res, next) => {
   User.findByIdAndUpdate(
     req.user._id,
     { name, about },
-    { new: true, runValidators: true },
+    { new: true, runValidators: true }
   )
     .orFail(() => {
-      throw new ErrorNotFound(`Пользователь с id ${req.params.id} не найден.`);
+      throw new ErrorNotFound(`User with id ${req.params.id} is not found.`);
     })
     .then((user) => res.send({ data: user }))
     .catch((err) => {
       if (err.name === "CastError") {
-        next(new ErrorValidation(`Некорректный id ${req.params.id}`));
+        next(new ErrorValidation(`Invalid id ${req.params.id}`));
       } else if (err.name === "ValidationError") {
-        next(new ErrorValidation("Неправильные данные"));
+        next(new ErrorValidation("Invalid data"));
       } else {
         next(err);
       }
@@ -116,17 +116,17 @@ module.exports.updateUserAvatar = (req, res, next) => {
   User.findByIdAndUpdate(
     req.user._id,
     { avatar },
-    { new: true, runValidators: true },
+    { new: true, runValidators: true }
   )
     .orFail(() => {
-      throw new ErrorNotFound(`Пользователь с id ${req.params.id} не найден.`);
+      throw new ErrorNotFound(`User with id ${req.params.id} is not found.`);
     })
     .then((user) => res.send({ data: user }))
     .catch((err) => {
       if (err.name === "CastError") {
-        next(new ErrorValidation(`Некорректный id ${req.params.id}`));
+        next(new ErrorValidation(`Invalid id ${req.params.id}`));
       } else if (err.name === "ValidationError") {
-        next(new ErrorValidation("Неправильные данные"));
+        next(new ErrorValidation("Invalid data"));
       } else {
         next(err);
       }
@@ -142,7 +142,7 @@ module.exports.login = (req, res, next) => {
         { _id: user._id },
         NODE_ENV === "production" ? JWT_SECRET : "dev-secret",
 
-        { expiresIn: "7d" },
+        { expiresIn: "7d" }
       );
 
       res

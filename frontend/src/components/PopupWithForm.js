@@ -8,16 +8,26 @@ function PopupWithForm({
   children,
 }) {
   return (
-    <div className={`popup popup_${name} ${isOpen ? 'popup_opened' : ''}`}>
+    <div
+      className={`popup popup_${name} ${
+        isOpen ? 'popup_opened' : ''
+      }`}
+    >
       <div className="popup__container">
         <button
           type="button"
-          aria-label="Закрыть редактирование информации"
+          aria-label="Close info editing"
           className="interactive-button popup__close-button"
           onClick={onClose}
         ></button>
-        <h2 className="popup__heading">{title}</h2>
-        <form name={name} className="popup__form" onSubmit={onSubmit}>
+        <h2 className="popup__heading">
+          {title}
+        </h2>
+        <form
+          name={name}
+          className="popup__form"
+          onSubmit={onSubmit}
+        >
           {children}
           <button
             type="submit"

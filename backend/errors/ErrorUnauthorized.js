@@ -1,5 +1,5 @@
 class ErrorUnauthorized extends Error {
-  constructor(message = "Такой email уже зарегистрирован.") {
+  constructor(message = "The email address is already registered.") {
     super(message);
     this.statusCode = 401;
   }

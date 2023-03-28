@@ -20,6 +20,8 @@ const auth = require("./middlewares/auth");
 const allowedCors = [
   "http://mestogram.students.nomoredomains.work",
   "https://mestogram.students.nomoredomains.work",
+  "http://localhost:3000",
+  "https://localhost:3000",
 ];
 
 app.use(bodyParser.json());
@@ -28,7 +30,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(requestLogger);
 
 app.use((req, res, next) => {
-  const { origin } = req.headers; // Сохраняем источник запроса в переменную origin
+  const { origin } = req.headers; // Save the request source to a variable origin
   if (allowedCors.includes(origin)) {
     res.header("Access-Control-Allow-Origin", origin);
     res.header("Access-Control-Allow-Credentials", "true");
@@ -59,7 +61,7 @@ app.post(
       password: Joi.string().required().min(8),
     }),
   }),
-  login,
+  login
 );
 
 app.post(
@@ -72,7 +74,7 @@ app.post(
         if (
           !isURL(url, { protocols: ["http", "https"], require_protocol: true })
         ) {
-          return helper.message(`${url} не валидная ссылка.`);
+          return helper.message(`${url} is invalied link.`);
         }
         return url;
       }),
@@ -80,7 +82,7 @@ app.post(
       password: Joi.string().required().min(8),
     }),
   }),
-  createUser,
+  createUser
 );
 
 app.use(cookieParser());
@@ -95,7 +97,7 @@ app.use("/users", require("./routes/users"));
 app.use("/cards", require("./routes/cards"));
 
 app.use(() => {
-  throw new ErrorNotFound("Страница не найдена!");
+  throw new ErrorNotFound("Page is not found.");
 });
 
 app.use(errorLogger);
@@ -104,7 +106,7 @@ app.use(errors());
 
 app.use(errorHandler);
 
-// подключаемся к серверу mongo
+// connect mongo server
 mongoose.connect("mongodb://localhost:27017/mestodb", {
   useNewUrlParser: true,
 });

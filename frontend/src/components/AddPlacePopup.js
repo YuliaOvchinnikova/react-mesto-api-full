@@ -1,7 +1,14 @@
-import { useState, useEffect } from 'react';
+import {
+  useState,
+  useEffect,
+} from 'react';
 import PopupWithForm from './PopupWithForm';
 
-function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
+function AddPlacePopup({
+  isOpen,
+  onClose,
+  onAddPlace,
+}) {
   const [name, setName] = useState('');
   const [link, setLink] = useState('');
 
@@ -28,9 +35,9 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
   }
   return (
     <PopupWithForm
-      title="Новое место"
+      title="Add your place"
       name="adding"
-      buttonText="Сохранить"
+      buttonText="Save"
       isOpen={isOpen}
       onClose={onClose}
       onSubmit={handleSubmit}
@@ -40,7 +47,7 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
         type="text"
         id="name-input"
         name="name"
-        placeholder="Название"
+        placeholder="Name"
         minLength="2"
         maxLength="30"
         required
@@ -53,7 +60,7 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
         type="url"
         id="link-input"
         name="link"
-        placeholder="Ссылка на картинку"
+        placeholder="Link of your place"
         required
         value={link}
         onChange={handleChangeLink}

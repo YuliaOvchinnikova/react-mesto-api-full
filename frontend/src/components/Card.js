@@ -1,16 +1,27 @@
 import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
 import { useContext } from 'react';
 
-function Card({ card, onCardClick, onDeleteCard, onCardLike }) {
-  const currentUser = useContext(CurrentUserContext);
+function Card({
+  card,
+  onCardClick,
+  onDeleteCard,
+  onCardLike,
+}) {
+  const currentUser = useContext(
+    CurrentUserContext
+  );
 
-  const isOwn = card.owner === currentUser._id;
-
+  const isOwn =
+    card.owner === currentUser._id;
   const cardDeleteButtonClassName = `interactive-button place__trash ${
-    isOwn ? 'card__delete-button_visible' : 'card__delete-button_hidden'
+    isOwn
+      ? 'card__delete-button_visible'
+      : 'card__delete-button_hidden'
   }`;
 
-  const isLiked = card.likes.includes(currentUser._id);
+  const isLiked = card.likes.includes(
+    currentUser._id
+  );
 
   const cardLikeButtonClassName = `place__like ${
     isLiked ? 'place__like_active' : ''
@@ -30,20 +41,32 @@ function Card({ card, onCardClick, onDeleteCard, onCardLike }) {
       />
       <button
         type="button"
-        aria-label="Удалить место"
-        className={cardDeleteButtonClassName}
-        onClick={() => onDeleteCard(card)}
+        aria-label="Delete the place"
+        className={
+          cardDeleteButtonClassName
+        }
+        onClick={() =>
+          onDeleteCard(card)
+        }
       ></button>
       <div className="place__container">
-        <h2 className="place__name">{card.name}</h2>
+        <h2 className="place__name">
+          {card.name}
+        </h2>
         <div className="place__like-container">
           <button
             type="button"
-            aria-label="Лайкнуть место"
-            className={cardLikeButtonClassName}
-            onClick={() => onCardLike(card)}
+            aria-label="Like the place"
+            className={
+              cardLikeButtonClassName
+            }
+            onClick={() =>
+              onCardLike(card)
+            }
           ></button>
-          <p className="place__counter">{card.likes.length}</p>
+          <p className="place__counter">
+            {card.likes.length}
+          </p>
         </div>
       </div>
     </div>

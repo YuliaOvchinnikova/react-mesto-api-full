@@ -1,4 +1,6 @@
-import React, { useContext } from 'react';
+import React, {
+  useContext,
+} from 'react';
 import Card from './Card.js';
 import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
 
@@ -11,7 +13,9 @@ function Main({
   onCardLike,
   onCardDelete,
 }) {
-  const currentUser = useContext(CurrentUserContext);
+  const currentUser = useContext(
+    CurrentUserContext
+  );
   return (
     <main className="content">
       <section className="profile">
@@ -22,31 +26,38 @@ function Main({
           >
             <img
               src={currentUser.avatar}
-              alt="Аватар пользователя"
+              alt="Profile photo"
               className="profile__photo"
             />
           </div>
 
           <div className="profile__info">
-            <h1 className="profile__name">{currentUser.name}</h1>
+            <h1 className="profile__name">
+              {currentUser.name}
+            </h1>
             <button
               type="button"
-              aria-label="Редактировать профайл"
+              aria-label="Edit profile"
               className="interactive-button profile__edit-button"
               onClick={onEditProfile}
             ></button>
-            <p className="profile__about">{currentUser.about}</p>
+            <p className="profile__about">
+              {currentUser.about}
+            </p>
           </div>
         </div>
         <button
           type="button"
-          aria-label="Добавить карточку с местом"
+          aria-label="Add place"
           className="interactive-button profile__add-button"
           onClick={onAddPlace}
         ></button>
       </section>
 
-      <section className="places" aria-label="Фотографии мест">
+      <section
+        className="places"
+        aria-label="Photos of places"
+      >
         {cards.map((card) => (
           <Card
             card={card}
